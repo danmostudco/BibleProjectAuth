@@ -19,3 +19,6 @@ Content-Type: application/json
     "name": "Walt",
     "password": "dogs"
 }
+
+###
+GET http://localhost:3000/query

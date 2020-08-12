@@ -2,8 +2,12 @@ const express = require("express");
 const app = express();
 const bcrypt = require("bcrypt");
 const { response } = require("express");
+const dbQuery = require("./db/commonJSdbQuery");
+// import dbQuery from "./db/dbQuery";
 
 app.use(express.json());
+
+const usersQuery = "SELECT * FROM users";
 
 // this will become a DB eventually
 // walt pw = dogs, kent password = cats
@@ -49,6 +53,11 @@ app.post("/users/login", async (req, res) => {
   } catch {
     res.status(500).send();
   }
+});
+
+app.get("/query", async (req, res) => {
+  const users = await dbQuery.query(usersQuery);
+  res.send(users);
 });
 
 app.listen(3000);
