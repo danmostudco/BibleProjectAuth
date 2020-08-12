@@ -6,10 +6,15 @@ const { response } = require("express");
 app.use(express.json());
 
 // this will become a DB eventually
+// walt pw = dogs, kent password = cats
 const users = [
   {
-    name: "Dannnn",
-    password: "password",
+    name: "Walt",
+    password: "$2b$10$UcG1fkfivkGenavAyIy2xuOvs4amizMPR78MzfU2nfTaWRZq5EMrC",
+  },
+  {
+    name: "Kent",
+    password: "$2b$10$aUrcn9qUMLL9AOgXjks3MuDQYM7Wp6jP5O/g1014VyOl/28tzTjMS",
   },
 ];
 
@@ -18,7 +23,7 @@ app.get("/users", (req, res) => {
   res.json(users);
 });
 
-app.post("/users", async (req, res) => {
+app.post("/register", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     console.log(hashedPassword);
