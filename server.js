@@ -2,30 +2,16 @@ const express = require("express");
 const app = express();
 const bcrypt = require("bcrypt");
 const { response } = require("express");
-const dbQuery = require("./db/commonJSdbQuery");
-// import dbQuery from "./db/dbQuery";
+const userQueries = require("./db/userQueries.js");
 
 app.use(express.json());
 
-const usersQuery = "SELECT * FROM users";
-
 // this will become a DB eventually
 // walt pw = dogs, kent password = cats
-const users = [
-  {
-    name: "Walt",
-    password: "$2b$10$UcG1fkfivkGenavAyIy2xuOvs4amizMPR78MzfU2nfTaWRZq5EMrC",
-  },
-  {
-    name: "Kent",
-    password: "$2b$10$aUrcn9qUMLL9AOgXjks3MuDQYM7Wp6jP5O/g1014VyOl/28tzTjMS",
-  },
-];
+const users = [];
 
-// for testing purposes just to show users
-app.get("/users", (req, res) => {
-  res.json(users);
-});
+app.get("/users", userQueries.getUsers);
+app.get("/users/:id", userQueries.getUserById);
 
 app.post("/register", async (req, res) => {
   try {
@@ -53,11 +39,6 @@ app.post("/users/login", async (req, res) => {
   } catch {
     res.status(500).send();
   }
-});
-
-app.get("/query", async (req, res) => {
-  const users = await dbQuery.query(usersQuery);
-  res.send(users);
 });
 
 app.listen(3000);

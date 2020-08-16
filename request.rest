@@ -2,6 +2,10 @@ GET http://localhost:3000/users
 
 ###
 
+GET http://localhost:3000/users/1
+
+###
+
 POST http://localhost:3000/register
 Content-Type: application/json
 
@@ -19,6 +23,3 @@ Content-Type: application/json
     "name": "Walt",
     "password": "dogs"
 }
-
-###
-GET http://localhost:3000/query
