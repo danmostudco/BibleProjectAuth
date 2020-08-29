@@ -21,5 +21,9 @@ Content-Type: application/json
 
 {
     "name": "danny",
-    "password": "pssword"
+    "password": "password"
 }
+
+###
+GET http://localhost:3000/favorites
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDEsIm5hbWUiOiJkYW5ueSIsImlhdCI6MTU5ODczMTI1M30.veo58quO6KDoVSssJ-k74c1kDknzPWREsU9UHFZS9gg

@@ -1,5 +1,6 @@
 const pool = require("./pool");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const getUsers = (request, response) => {
   pool.query("SELECT * FROM users", (error, results) => {
@@ -27,7 +28,6 @@ const createUser = async (request, response) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const accountName = name;
-    console.log(hashedPassword);
     pool.query(
       "INSERT INTO users (name, password) VALUES ($1, $2) RETURNING *",
       [accountName, hashedPassword],
@@ -56,7 +56,9 @@ const login = async (request, response) => {
 
   try {
     if (await bcrypt.compare(password, user.password)) {
-      response.status(201).send("Success");
+      delete user.password;
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+      response.status(201).json({ accessToken: accessToken });
     } else {
       response.status(401).send("not allowed");
     }
